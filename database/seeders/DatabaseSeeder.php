@@ -1,6 +1,8 @@
 <?php
 
 namespace Database\Seeders;
+use App\Models\ClassModel;
+use App\Models\Subject;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,5 +21,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        ClassModel::factory(15)->create();
+        Subject::factory(15)->create();
     }
 }

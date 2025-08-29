@@ -1,6 +1,8 @@
 <?php
 use App\Models\User;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClassController;
+use App\Http\Controllers\SubjectController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ColorController;
 use App\Http\Middleware\ColorTest;
@@ -53,25 +55,35 @@ Route::get('/users', function () {
     return view('users', compact('users'));
 })->name('users.index');
 
-// Create new user (GET form)
+
 Route::get('/users/create', function () {
     return view('create-users');
 })->name('users.create');
 
-// Create new user (POST)
 Route::post('/users', function (Request $request) {
    
     return redirect()->route('users.index')->with('success', 'User created successfully!');
 });
 
-// User profile
+
 Route::get('/profile', function () {
     $user = Auth::user(); 
 
     return view('profile', compact('user'));
 })->middleware('auth')->name('profile');
 
-// Settings page
+
 Route::get('/settings', function () {
     return view('settings');
 })->name('settings');
+
+
+// Task 3 routes 
+Route::view('/main','Task3.main-page');
+
+
+Route::middleware(['auth'])->get('/classes', [ClassController::class, 'index'])->name('classes.index');
+Route::delete('/classes/{id}', [ClassController::class, 'destroy'])->name('classes.delete');
+
+Route::middleware(['auth'])->get('/subjects', [SubjectController::class, 'index'])->name('subjects.index');
+Route::delete('/subjects/{id}', [SubjectController::class, 'destroy'])->name('subjects.delete');
