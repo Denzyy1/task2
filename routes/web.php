@@ -3,6 +3,7 @@ use App\Models\User;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\PostController;
 use App\Http\Middleware\ColorTest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -53,25 +54,27 @@ Route::get('/users', function () {
     return view('users', compact('users'));
 })->name('users.index');
 
-// Create new user (GET form)
 Route::get('/users/create', function () {
     return view('create-users');
 })->name('users.create');
 
-// Create new user (POST)
+
 Route::post('/users', function (Request $request) {
    
     return redirect()->route('users.index')->with('success', 'User created successfully!');
 });
 
-// User profile
+
 Route::get('/profile', function () {
     $user = Auth::user(); 
 
     return view('profile', compact('user'));
 })->middleware('auth')->name('profile');
 
-// Settings page
+
 Route::get('/settings', function () {
     return view('settings');
 })->name('settings');
+
+Route::get('/posts/create', [PostController::class, 'create']);
+Route::post('/posts', [PostController::class, 'store']);
