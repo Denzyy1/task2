@@ -83,7 +83,7 @@ Route::view('/main','Task3.main-page');
 
 
 Route::middleware(['auth'])->get('/classes', [ClassController::class, 'index'])->name('classes.index');
-Route::delete('/classes/{id}', [ClassController::class, 'destroy'])->name('classes.delete');
+Route::middleware(['auth'])->delete('/classes/{id}', [ClassController::class, 'destroy'])->name('classes.delete');
 
 Route::middleware(['auth'])->get('/subjects', [SubjectController::class, 'index'])->name('subjects.index');
-Route::delete('/subjects/{id}', [SubjectController::class, 'destroy'])->name('subjects.delete');
+Route::middleware(['auth'])->delete('/subjects/{id}', [SubjectController::class, 'destroy'])->name('subjects.delete');
